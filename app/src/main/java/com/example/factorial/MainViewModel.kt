@@ -27,12 +27,12 @@ class MainViewModel : ViewModel() {
     fun calculateFactorial(value: String?) {
 //        _progressBar.value = true
 //        _state.value = State(isInProgress = true)
-        _state.value = Progress()
+        _state.value = Progress
 
         if (value.isNullOrBlank()) {
 //            _error.value = true
 //            _state.value = State(isError = true)
-            _state.value = Error()
+            _state.value = Error
             return
         }
         viewModelScope.launch {
