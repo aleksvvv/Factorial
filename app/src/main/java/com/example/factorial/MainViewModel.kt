@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.math.BigInteger
+import kotlin.concurrent.thread
+import kotlin.coroutines.suspendCoroutine
 
 class MainViewModel : ViewModel() {
     private val _state = MutableLiveData<State>()
@@ -44,15 +46,23 @@ class MainViewModel : ViewModel() {
 //            _progressBar.value = false
 //            _factorial.value = number.toString()
 //            _state.value = State(isFactorial = number.toString())
-            _state.value = Factorial(result.toString())
+            _state.value = Factorial(result)
         }
     }
 
-    private fun factorial(number: Long): BigInteger {
-        var result = BigInteger.ONE
-        for (i in 1..number) {
-            result = result.multiply(BigInteger.valueOf(i))
+    private suspend fun factorial(number: Long): String {
+//делаем из метода suspend-функцию
+        return suspendCoroutine {
+            thread {
+                var result = BigInteger.ONE
+                for (i in 1..number) {
+                    result = result.multiply(BigInteger.valueOf(i))
+                }
+                //коллбэк в виде объекта Continuation
+                it.resumeWith(Result.success(result.toString()))
+            }
         }
-        return result
+
+
     }
 }
