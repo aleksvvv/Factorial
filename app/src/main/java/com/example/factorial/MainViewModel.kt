@@ -10,8 +10,8 @@ import java.math.BigInteger
 
 class MainViewModel : ViewModel() {
     private val _state = MutableLiveData<State>()
-    val state:LiveData<State>
-    get() = _state
+    val state: LiveData<State>
+        get() = _state
 
 //    private val _error = MutableLiveData<Boolean>()
 //    val error: LiveData<Boolean>
@@ -38,19 +38,20 @@ class MainViewModel : ViewModel() {
         }
         viewModelScope.launch {
             val number = value.toLong()
-            val result =factorial(number)
+            val result = factorial(number)
 
-            delay(1000)
+//            delay(1000)
 //            _progressBar.value = false
 //            _factorial.value = number.toString()
 //            _state.value = State(isFactorial = number.toString())
-            _state.value = Result(result.toString())
+            _state.value = Factorial(result.toString())
         }
     }
-    fun factorial(number: Long):BigInteger{
+
+    private fun factorial(number: Long): BigInteger {
         var result = BigInteger.ONE
-        for (i in 1..number){
-            result =result.multiply(BigInteger.valueOf(i))
+        for (i in 1..number) {
+            result = result.multiply(BigInteger.valueOf(i))
         }
         return result
     }

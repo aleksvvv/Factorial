@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
                     binding.progressCircular.visibility = View.VISIBLE
                     binding.button.isEnabled = false
                 }
-                is Result -> {
-                    binding.tvResultFactorial.text = it.factorial
+                is Factorial -> {
+                    binding.tvResultFactorial.text = it.value
                 }
             }
 
