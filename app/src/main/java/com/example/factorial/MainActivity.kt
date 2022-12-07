@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
             if (it) {
                 Toast.makeText(this, "Input number", Toast.LENGTH_SHORT).show()
                 binding.progressCircular.visibility = View.GONE
+                binding.button.isEnabled = true
             }
         }
         viewModel.factorial.observe(this) {
