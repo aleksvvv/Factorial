@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.math.BigInteger
 
 class MainViewModel : ViewModel() {
     private val _state = MutableLiveData<State>()
@@ -46,10 +47,10 @@ class MainViewModel : ViewModel() {
             _state.value = Result(result.toString())
         }
     }
-    fun factorial(number: Long):Long{
-        var result = 1L
+    fun factorial(number: Long):BigInteger{
+        var result = BigInteger.ONE
         for (i in 1..number){
-            result*=i
+            result =result.multiply(BigInteger.valueOf(i))
         }
         return result
     }
