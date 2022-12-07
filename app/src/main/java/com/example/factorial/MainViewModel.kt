@@ -37,15 +37,20 @@ class MainViewModel : ViewModel() {
         }
         viewModelScope.launch {
             val number = value.toLong()
-//        calculate
+            val result =factorial(number)
 
             delay(1000)
 //            _progressBar.value = false
 //            _factorial.value = number.toString()
 //            _state.value = State(isFactorial = number.toString())
-            _state.value = Result(number.toString())
+            _state.value = Result(result.toString())
         }
-
-
+    }
+    fun factorial(number: Long):Long{
+        var result = 1L
+        for (i in 1..number){
+            result*=i
+        }
+        return result
     }
 }
