@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -28,28 +27,63 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-
-        viewModel.error.observe(this) {
-            if (it) {
-                Toast.makeText(this, "Input number", Toast.LENGTH_SHORT).show()
-                binding.progressCircular.visibility = View.GONE
-                binding.button.isEnabled = true
+        viewModel.state.observe(this) {
+            binding.progressCircular.visibility = View.GONE
+            binding.button.isEnabled = true
+            when (it) {
+                is Error -> {
+                    Toast.makeText(this, "Input number", Toast.LENGTH_SHORT).show()
+                    binding.progressCircular.visibility = View.GONE
+                    binding.button.isEnabled = true
+                }
+                is Progress -> {
+                    binding.progressCircular.visibility = View.VISIBLE
+                    binding.button.isEnabled = false
+                }
+                is Result -> {
+                    binding.tvResultFactorial.text = it.factorial
+                }
             }
-        }
-        viewModel.factorial.observe(this) {
-            binding.tvResultFactorial.text = it.toString()
-        }
-        viewModel.progressBar.observe(this) {
 
-            if (it) {
-                binding.progressCircular.visibility = View.VISIBLE
-                binding.button.isEnabled = false
-            } else {
-                binding.progressCircular.visibility = View.GONE
-                binding.button.isEnabled = true
-            }
-        }
 
+//            if (it.isError) {
+
+//            if (it.Error()) {
+//                Toast.makeText(this, "Input number", Toast.LENGTH_SHORT).show()
+//                binding.progressCircular.visibility = View.GONE
+//                binding.button.isEnabled = true
+//            }
+//            if (it.isInProgress) {
+//                binding.progressCircular.visibility = View.VISIBLE
+//                binding.button.isEnabled = false
+//            } else {
+//                binding.progressCircular.visibility = View.GONE
+//                binding.button.isEnabled = true
+//            }
+//            binding.tvResultFactorial.text = it.isFactorial
+//        }
+
+//        viewModel.error.observe(this) {
+//            if (it) {
+//                Toast.makeText(this, "Input number", Toast.LENGTH_SHORT).show()
+//                binding.progressCircular.visibility = View.GONE
+//                binding.button.isEnabled = true
+//            }
+//        }
+//        viewModel.factorial.observe(this) {
+//            binding.tvResultFactorial.text = it.toString()
+//        }
+//        viewModel.progressBar.observe(this) {
+//
+//            if (it) {
+//                binding.progressCircular.visibility = View.VISIBLE
+//                binding.button.isEnabled = false
+//            } else {
+//                binding.progressCircular.visibility = View.GONE
+//                binding.button.isEnabled = true
+//            }
+//        }
+
+        }
     }
-
 }
