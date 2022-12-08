@@ -39,27 +39,40 @@ class MainViewModel : ViewModel() {
         }
         viewModelScope.launch {
             val number = value.toLong()
-            val result = factorial(number)
+            val result = withContext(Dispatchers.Default) {
+                factorial(number)
+            }
+            _state.value = Factorial(result)
+        }
 
 //            delay(1000)
 //            _progressBar.value = false
 //            _factorial.value = number.toString()
 //            _state.value = State(isFactorial = number.toString())
-            _state.value = Factorial(result)
-        }
+
+
+}
+
+private suspend fun factorial(number: Long): String {
+
+    var result = BigInteger.ONE
+    for (i in 1..number) {
+        result = result.multiply(BigInteger.valueOf(i))
     }
+    return result.toString()
+}
 
-    private suspend fun factorial(number: Long): String {
-
-        return withContext(Dispatchers.Default) {
-            var result = BigInteger.ONE
-            for (i in 1..number) {
-                result = result.multiply(BigInteger.valueOf(i))
-            }
-            result.toString()
-        }
-
-    }
+//    private suspend fun factorial(number: Long): String {
+//
+//        return withContext(Dispatchers.Default) {
+//            var result = BigInteger.ONE
+//            for (i in 1..number) {
+//                result = result.multiply(BigInteger.valueOf(i))
+//            }
+//            result.toString()
+//        }
+//
+//    }
 
 //    private suspend fun factorial(number: Long): String {
 ////делаем из метода suspend-функцию
